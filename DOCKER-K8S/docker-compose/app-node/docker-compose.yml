@@ -1,1 +1,39 @@
-A COMPLETER
+name: compose-node
+
+services:
+  web:
+    build:
+      context: .
+
+    container_name: node-web
+    ports:
+      - 5000:80
+
+    environment:
+      DB_HOST: db
+      DB_PASSWORD: root
+
+    networks:
+      - rso-node
+
+  db:
+    image: mysql:latest
+    container_name: node-db
+
+    environment:
+      MYSQ_ROOT_PASSWORD: root
+      MYSQL_DATABASE: demonode
+
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+    networks:
+      - rso-node
+
+networks:
+  rso-node:
+    name: rso-node
+
+volumes:
+  mysql_data:
