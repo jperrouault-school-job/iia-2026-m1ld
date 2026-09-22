@@ -1,0 +1,25 @@
+name: compose-nginx
+
+# Liste des containers à gérer
+services:
+  web: # Le nom du service
+    image: nginx:latest
+    container_name: web-nginx
+    ports:
+      - 5005:80
+
+    volumes:
+      # - ./index.html:/usr/share/nginx/html/index.html
+      - thevolume:/usr/share/nginx/html
+
+    networks:
+      - key-network-nginx
+
+
+networks:
+  key-network-nginx:
+    name: network-nginx
+
+volumes:
+  thevolume:
+    name: thenameofthevolume
