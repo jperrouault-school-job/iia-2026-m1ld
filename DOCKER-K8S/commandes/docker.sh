@@ -30,6 +30,18 @@ docker rm id-container
 docker rm nom-container -f
 docker rm id-container -f
 
+# Démarrer un container existant
+docker start nom-container
+docker start id-container
+
+# Arrêter un container
+docker stop nom-container
+docker stop id-container
+
+# Redémarrer un container
+docker restart nom-container
+docker restart id-container
+
 # Copier un fichier de la machine vers un container
 docker cp chemin/vers/fichier-source.txt nom-container:/chemin/vers/destination.txt
 
