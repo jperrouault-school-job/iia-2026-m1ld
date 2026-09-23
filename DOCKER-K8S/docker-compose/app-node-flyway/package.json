@@ -1,0 +1,13 @@
+{
+  "name": "k8s-crash-test",
+  "version": "1.0.0",
+  "description": "Small Node.js app for testing Kubernetes pod restarts",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "mysql2": "^3.11.0"
+  }
+}

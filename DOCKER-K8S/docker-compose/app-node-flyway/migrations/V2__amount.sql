@@ -1,0 +1,2 @@
+ALTER TABLE demo
+    ADD COLUMN amount DECIMAL(8, 5);
