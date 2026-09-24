@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: app-html-nginx
+
+spec:
+  type: ClusterIP
+
+  selector:
+    app: app-nginx
+
+  ports:
+    - port: 8080
+      targetPort: 80

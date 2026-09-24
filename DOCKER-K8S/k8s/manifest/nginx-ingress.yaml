@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+
+metadata:
+  name: ing-app-html-nginx
+
+spec:
+  rules:
+    - host: app-html-nginx.localhost
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: app-html-nginx # Le nom du service
+                port:
+                  number: 8080 # Le port du service
