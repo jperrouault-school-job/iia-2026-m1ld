@@ -24,6 +24,7 @@ services:
     image: rancher/k3s:v1.36.4-k3s1
     container_name: k8s-cp
     privileged: true
+    working_dir: /k8s
 
     environment:
       K3S_TOKEN: mon-super-token-secret
@@ -35,12 +36,14 @@ services:
     volumes:
       - k3s-server:/var/lib/rancher/k3s
       - ./registries.yaml:/etc/rancher/k3s/registries.yaml
+      - ./manifest:/k8s
 
     networks:
       - k8s
 
     command:
       - server
+      # - --disable-agent
       - --node-taint=node-role.kubernetes.io/control-plane=true:NoSchedule
 
   # =========================
