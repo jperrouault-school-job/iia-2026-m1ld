@@ -49,3 +49,9 @@ kubectl rollout status deploy nom-app
 
 # Redémarrer un déploiement
 kubectl rollout restart deploy nom-app
+
+# Pour appliquer un Manifest
+ kubectl apply -f /chemin/vers/fichier-manifest.yaml
+
+# Supprimer un Manifest
+ kubectl delete -f /chemin/vers/fichier-manifest.yaml
