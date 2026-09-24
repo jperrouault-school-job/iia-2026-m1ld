@@ -1,0 +1,25 @@
+apiVersion: apps/v1 # On adapte la version en fonction du type d'API
+kind: Deployment # Le type d'API
+
+metadata:
+  name: app-node
+
+spec:
+  replicas: 2 # Nombre de réplicas
+
+  selector:
+    matchLabels:
+      app: app-node # Gestion des pods qui ont ce label
+
+  template:
+    metadata:
+      labels:
+        app: app-node # Tout ce qu'on a mis dans le selector doit se trouver ici
+
+    spec:
+      containers:
+        - name: app-node
+          image: registry:5000/app-node:latest
+
+          ports:
+            - containerPort: 80
