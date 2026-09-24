@@ -1,0 +1,110 @@
+name: k8s
+
+services:
+  # =========================
+  # Control Plane
+  # =========================
+  cp:
+    image: rancher/k3s:v1.36.4-k3s1
+    container_name: k8s-cp
+    privileged: true
+
+    environment:
+      K3S_TOKEN: mon-super-token-secret
+
+    ports:
+      - 8080:80
+
+    volumes:
+      - k3s-server:/var/lib/rancher/k3s
+
+    networks:
+      - k8s
+
+    command:
+      - server
+
+  # =========================
+  # Worker 1
+  # =========================
+  worker1:
+    image: rancher/k3s:v1.36.4-k3s1
+    container_name: k8s-worker1
+    privileged: true
+
+    environment:
+      K3S_TOKEN: mon-super-token-secret
+      K3S_URL: https://cp:6443
+
+    volumes:
+      - k3s-worker1:/var/lib/rancher/k3s
+
+    networks:
+      - k8s
+
+    depends_on:
+      - cp
+
+    command:
+      - agent
+
+
+  # =========================
+  # Worker 2
+  # =========================
+  worker2:
+    image: rancher/k3s:v1.36.4-k3s1
+    container_name: k8s-worker2
+    privileged: true
+
+    environment:
+      K3S_TOKEN: mon-super-token-secret
+      K3S_URL: https://cp:6443
+
+    volumes:
+      - k3s-worker2:/var/lib/rancher/k3s
+
+    networks:
+      - k8s
+
+    depends_on:
+      - cp
+
+    command:
+      - agent
+
+
+  # =========================
+  # Worker 3
+  # =========================
+  worker3:
+    image: rancher/k3s:v1.36.4-k3s1
+    container_name: k8s-worker3
+    privileged: true
+
+    environment:
+      K3S_TOKEN: mon-super-token-secret
+      K3S_URL: https://cp:6443
+
+    volumes:
+      - k3s-worker3:/var/lib/rancher/k3s
+
+    networks:
+      - k8s
+
+    depends_on:
+      - cp
+
+    command:
+      - agent
+
+
+networks:
+  k8s:
+    name: k8s
+
+volumes:
+  k3s-server:
+  k3s-worker1:
+  k3s-worker2:
+  k3s-worker3:
