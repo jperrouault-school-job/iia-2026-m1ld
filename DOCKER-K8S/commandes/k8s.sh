@@ -34,3 +34,18 @@ kubectl create ingress jhtml-nginx --rule="html-nginx.localhost/*=jhtml-nginx:80
 kubectl get ingresses
 kubectl get ing
 
+# Supprimer un Pod
+kubectl delete pod nom-pod
+
+# Scaler un Deployement
+kubectl scale deployment nom-app --replicas=N
+kubectl scale deploy nom-app --replicas=N
+
+# Mettre à jour l'image d'un Deployement
+kubectl set image deploy nom-app nom-app=nouvelle-image:tag
+
+# Voir le status du déploiement
+kubectl rollout status deploy nom-app
+
+# Redémarrer un déploiement
+kubectl rollout restart deploy nom-app
