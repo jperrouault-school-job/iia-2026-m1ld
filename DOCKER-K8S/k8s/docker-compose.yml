@@ -2,6 +2,22 @@ name: k8s
 
 services:
   # =========================
+  # Registry Docker Local
+  # =========================
+  registry:
+    image: registry:3.1.1
+    container_name: k8s-registry
+
+    ports:
+      5000:5000
+
+    volumes:
+      - registry-data:/var/lib/registry
+
+    networks:
+      - k8s
+
+  # =========================
   # Control Plane
   # =========================
   cp:
@@ -14,6 +30,7 @@ services:
 
     ports:
       - 8080:80
+      # - 5000:32647
 
     volumes:
       - k3s-server:/var/lib/rancher/k3s
@@ -23,6 +40,7 @@ services:
 
     command:
       - server
+      - --node-taint=node-role.kubernetes.io/control-plane=true:NoSchedule
 
   # =========================
   # Worker 1
@@ -104,6 +122,7 @@ networks:
     name: k8s
 
 volumes:
+  registry-data:
   k3s-server:
   k3s-worker1:
   k3s-worker2:
