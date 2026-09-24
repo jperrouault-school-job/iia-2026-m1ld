@@ -1,0 +1,52 @@
+stages:
+  - build
+  - dockerbuild
+  - dockerdeploy
+
+variables:
+  IMAGE_NAME: hello-spring
+  IMAGE_TAG: $CI_COMMIT_SHORT_SHA
+
+workflow:
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+
+default:
+  tags:
+    - iia
+
+build:
+  stage: build
+  image: maven:3.9.16-eclipse-temurin-25
+
+  cache:
+    key:
+      files:
+        - pom.xml
+
+    paths:
+      - .m2/repository
+
+    policy: pull-push
+
+  script:
+    - mvn package -DskipTests -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository
+
+  artifacts:
+    paths:
+      - target/*.jar
+
+    expire_in: 1 hour
+
+dockerbuild:
+  stage: dockerbuild
+
+  script:
+    - docker build -t $IMAGE_NAME:$IMAGE_TAG .
+    - docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:latest
+
+dockerdeploy:
+  stage: dockerdeploy
+
+  script:
+    - docker compose up -d --no-deps boot

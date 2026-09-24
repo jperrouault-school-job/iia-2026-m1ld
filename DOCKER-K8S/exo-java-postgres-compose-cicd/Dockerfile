@@ -1,12 +1,9 @@
-FROM debian:bookworm-slim
+FROM eclipse-temurin:25.0.4_7-jre
 
 WORKDIR /app
 
-COPY target/demo .
+COPY ./target/*.jar hello.jar
 
-RUN ln -sf /usr/share/zoneinfo/Europe/Paris /etc/localtime
-RUN echo "Europe/Paris" > /etc/timezone
+CMD [ "java", "-jar", "hello.jar" ]
 
-EXPOSE 8080
-
-CMD [ "./demo" ]
+EXPOSE 80
