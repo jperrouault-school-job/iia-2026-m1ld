@@ -9,7 +9,7 @@ services:
     container_name: k8s-registry
 
     ports:
-      5000:5000
+      - 5000:5000
 
     volumes:
       - registry-data:/var/lib/registry
