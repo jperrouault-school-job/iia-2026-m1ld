@@ -1,0 +1,64 @@
+apiVersion: apps/v1 # On adapte la version en fonction du type d'API
+kind: Deployment # Le type d'API
+
+metadata:
+  name: app-html-nginx
+
+spec:
+  replicas: 4 # Nombre de réplicas
+
+  selector:
+    matchLabels:
+      app: app-nginx # Gestion des pods qui ont ce label
+
+  template:
+    metadata:
+      labels:
+        app: app-nginx # Tout ce qu'on a mis dans le selector doit se trouver ici
+
+    spec:
+      containers:
+        - name: app-html-nginx
+          image: nginx:latest
+
+          ports:
+            - containerPort: 80
+
+---
+
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: app-html-nginx
+
+spec:
+  type: ClusterIP
+
+  selector:
+    app: app-nginx
+
+  ports:
+    - port: 8080
+      targetPort: 80
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+
+metadata:
+  name: ing-app-html-nginx
+
+spec:
+  rules:
+    - host: app-html-nginx.localhost
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: app-html-nginx # Le nom du service
+                port:
+                  number: 8080 # Le port du service
