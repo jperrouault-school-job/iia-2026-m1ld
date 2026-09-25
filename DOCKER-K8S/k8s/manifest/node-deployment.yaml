@@ -24,6 +24,10 @@ spec:
           ports:
             - containerPort: 80
 
-          env:
-            - name: MAVARIABLE
-              value: Jeremy
+          envFrom:
+            - configMapRef:
+                name: app-node-config
+
+          # env:
+          #   - name: MAVARIABLE
+          #     value: Jeremy
