@@ -55,3 +55,6 @@ kubectl rollout restart deploy nom-app
 
 # Supprimer un Manifest
  kubectl delete -f /chemin/vers/fichier-manifest.yaml
+
+# Exécuter une commande dans un pod
+kubectl exec -it nom-pod -- commande
