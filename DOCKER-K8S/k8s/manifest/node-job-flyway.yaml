@@ -14,9 +14,11 @@ spec:
           envFrom:
             - secretRef:
                 name: app-node-secret
+            - configMapRef:
+                name: app-node-config
 
           args:
-            - -url=jdbc:mysql://db-node:3306/demooo
+            - -url=jdbc:mysql://db-node:3306/$(MYSQL_DATABASE)
             - -user=$(MYSQL_USERNAME)
             - -password=$(MYSQL_ROOT_PASSWORD)
             - migrate
