@@ -8,4 +8,4 @@ data:
   MAVARIABLE: "La valeur"
 
   MYSQL_DATABASE: demooo
-  MYSQL_HOSTNAME: db
+  MYSQL_HOSTNAME: db-node
