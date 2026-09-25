@@ -2,9 +2,11 @@ apiVersion: v1
 kind: Service
 
 metadata:
-  name: node-db
+  name: db-node
 
 spec:
+  clusterIP: None
+
   selector:
     app: node-db
 
