@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: Job
+
+metadata:
+  name: node-job-flyway
+
+spec:
+  template:
+    spec:
+      containers:
+        - name: node-flyway
+          image: registry:5000/node-flyway:v1
+
+          envFrom:
+            - secretRef:
+                name: app-node-secret
+
+          args:
+            - -url=jdbc:mysql://db-node:3306/demooo
+            - -user=$(MYSQL_USERNAME)
+            - -password=$(MYSQL_ROOT_PASSWORD)
+            - migrate
+
+      restartPolicy: never
+
+  backoffLimit: 3
