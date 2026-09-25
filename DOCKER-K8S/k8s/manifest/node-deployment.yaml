@@ -24,9 +24,11 @@ spec:
           ports:
             - containerPort: 80
 
-          envFrom:
-            - configMapRef:
-                name: app-node-config
+          envFrom: # configMapRef et secretRef sont bien sûr cumulables
+            # - configMapRef:
+            #     name: app-node-config
+            - secretRef:
+                name: app-node-secret
 
           # env:
           #   - name: MAVARIABLE
