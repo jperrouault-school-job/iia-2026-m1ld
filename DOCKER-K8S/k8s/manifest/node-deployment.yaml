@@ -20,6 +20,7 @@ spec:
       containers:
         - name: app-node
           image: registry:5000/app-node:v3
+          imagePullPolicy: Always # On force le pull à chaque changement
 
           ports:
             - containerPort: 80
