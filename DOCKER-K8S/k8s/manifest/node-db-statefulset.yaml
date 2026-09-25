@@ -5,6 +5,7 @@ metadata:
   name: node-db
 
 spec:
+  serviceName: db-node
   replicas: 1
   selector:
     matchLabels:
