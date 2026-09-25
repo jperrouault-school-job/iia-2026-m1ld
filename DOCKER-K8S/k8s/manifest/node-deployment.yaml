@@ -19,16 +19,48 @@ spec:
     spec:
       containers:
         - name: app-node
-          image: registry:5000/app-node:v2
+          image: registry:5000/app-node:v3
 
           ports:
             - containerPort: 80
 
           envFrom: # configMapRef et secretRef sont bien sûr cumulables
-            # - configMapRef:
-            #     name: app-node-config
+            - configMapRef:
+                name: app-node-config
+
             - secretRef:
                 name: app-node-secret
+
+          env:
+            - name: MAVARIABLE
+              valueFrom:
+                secretKeyRef:
+                  name: app-node-secret
+                  key: var_name_different
+
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: app-node-config
+                  key: MYSQL_HOSTNAME
+
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: app-node-config
+                  key: MYSQL_DATABASE
+
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-node-secret
+                  key: MYSQL_ROOT_PASSWORD
+
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: app-node-secret
+                  key: MYSQL_USERNAME
 
           # env:
           #   - name: MAVARIABLE

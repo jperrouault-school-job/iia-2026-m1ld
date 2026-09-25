@@ -6,3 +6,6 @@ metadata:
 
 data:
   MAVARIABLE: "La valeur"
+
+  MYSQL_DATABASE: demooo
+  MYSQL_HOSTNAME: db
