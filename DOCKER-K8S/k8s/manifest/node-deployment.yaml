@@ -19,7 +19,11 @@ spec:
     spec:
       containers:
         - name: app-node
-          image: registry:5000/app-node:latest
+          image: registry:5000/app-node:v2
 
           ports:
             - containerPort: 80
+
+          env:
+            - name: MAVARIABLE
+              value: Jeremy
