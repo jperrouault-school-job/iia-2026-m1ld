@@ -21,6 +21,6 @@ spec:
             - -password=$(MYSQL_ROOT_PASSWORD)
             - migrate
 
-      restartPolicy: never
+      restartPolicy: Never
 
   backoffLimit: 3
