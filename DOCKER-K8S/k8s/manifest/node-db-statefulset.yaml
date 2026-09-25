@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: StatefulSet
+
+metadata:
+  name: node-db
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node-db
+
+  template:
+    metadata:
+      labels:
+        app: node-db
+
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:latest
+          ports:
+            - containerPort: 3306
+
+          envFrom:
+            - secretRef:
+                name: app-node-secret
+
+            - configMapRef:
+                name: app-node-config
+
+          volumeMounts:
+            - name: node-db-storage
+              mountPath: /var/lib/mysql
+
+  volumeClaimTemplates:
+    - metadata:
+        name: node-db-storage
+
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 1Gi # Capacité de stocage 1Go
